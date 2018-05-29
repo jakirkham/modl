@@ -1,0 +1,34 @@
+c_compiler:
+  - toolchain_c                # [unix]
+  - vs2008                     # [win]
+  - vs2015                     # [win]
+  - vs2015                     # [win]
+cxx_compiler:
+  - toolchain_cxx              # [unix]
+  - vs2008                     # [win]
+  - vs2015                     # [win]
+  - vs2015                     # [win]
+
+python:
+  - 3.5
+  - 3.6
+numpy:
+  - 1.9                        # [unix]
+  - 1.11                       # [win]
+openblas:
+  - 0.2.20
+vc:                            # [win]
+  - 9                          # [win]
+  - 14                         # [win]
+  - 14                         # [win]
+
+pin_run_as_build:
+  openblas:
+    max_pin: x.x.x
+
+zip_keys:
+  -
+    - python
+    - vc                       # [win]
+    - c_compiler               # [win]
+    - cxx_compiler             # [win]

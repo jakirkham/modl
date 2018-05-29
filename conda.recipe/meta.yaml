@@ -1,0 +1,50 @@
+{% set variant = "openblas" %}
+
+package:
+  name: modl
+  version: {{ environ.get('GIT_DESCRIBE_TAG', '') }}{{ '+' + environ.get('GIT_DESCRIBE_NUMBER', '0') + '.' + environ.get('GIT_DESCRIBE_HASH', '0') if environ.get('GIT_DESCRIBE_NUMBER', '0') != '0' else "" }}
+
+source:
+  git_url: ..
+
+build:
+  number: 200
+  skip: true  # [py<35]
+  features:
+    - blas_{{ variant }}
+  script: python -m pip install --no-deps --ignore-installed .
+
+requirements:
+  build:
+    - {{ compiler("c") }}
+  host:
+    - python
+    - pip
+    - cython >=0.25
+    - numpy 1.11.3
+    - scipy >=0.18
+    - blas 1.1 {{ variant }}
+    - openblas
+  run:
+    - python
+    - {{ pin_compatible('numpy') }}
+    - scipy >=0.18
+    - blas 1.1 {{ variant }}
+    - openblas
+    - matplotlib >=1.5
+    - pytest >=3.0.1
+    - nibabel >=0.2.1
+    - nilearn >=0.2.6
+    - scikit-learn >=0.18
+    - scikit-image >=0.12.3
+    - pandas >=0.18
+
+test:
+  commands:
+    - py.test --pyargs modl
+
+about:
+  home: https://github.com/arthurmensch/modl
+  license: BSD 3-Clause
+  license_file: LICENSE
+  summary: 'Randomized online matrix factorization'
